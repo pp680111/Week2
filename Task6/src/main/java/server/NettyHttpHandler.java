@@ -42,12 +42,13 @@ public class NettyHttpHandler extends ChannelInboundHandlerAdapter {
             response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.NO_CONTENT);
         } finally {
             if (request != null) {
-                ctx.write(response).addListener(ChannelFutureListener.CLOSE);
-//                if (!HttpUtil.isKeepAlive(request)) {
-//                    ctx.write(response).addListener(ChannelFutureListener.CLOSE);
-//                } else {
-//                    //TODO
-//                }
+//                ctx.write(response).addListener(ChannelFutureListener.CLOSE);
+                if (!HttpUtil.isKeepAlive(request)) {
+                    ctx.write(response).addListener(ChannelFutureListener.CLOSE);
+                } else {
+                    response.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
+                    ctx.write(response);
+                }
             }
         }
     }

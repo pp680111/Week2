@@ -13,7 +13,7 @@ import java.io.IOException;
 public class HttpServer03 {
     public static void main(String[] args) {
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
-        EventLoopGroup workerGroup = new NioEventLoopGroup(12);
+        EventLoopGroup workerGroup = new NioEventLoopGroup(4);
         try {
             ServerBootstrap sb = new ServerBootstrap();
             sb.group(bossGroup, workerGroup)
